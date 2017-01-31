@@ -8,8 +8,6 @@ import (
 	"go/token"
 	"strings"
 
-	// "template"
-
 	"log"
 	// "os"
 )
@@ -37,6 +35,12 @@ import (
 // {{end}}`))
 // )
 
+// ParsedFile contains all the information required to generate code for a file
+type ParsedFile struct {
+	Package         string
+	CollectionTypes []*CollectionType
+}
+
 /*
 CollectionType contains all the information about an annotated collection type
 required to generate Map, Reduce, and Filter.
@@ -57,7 +61,7 @@ type CollectionType struct {
 	TypeExpr string
 }
 
-func parseFile(inputPath string) []*CollectionType {
+func parseFile(inputPath string) *ParsedFile {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, inputPath, nil, parser.ParseComments)
 	if err != nil {
@@ -79,7 +83,10 @@ func parseFile(inputPath string) []*CollectionType {
 		)
 	}
 
-	return collectionTypes
+	return &ParsedFile{
+		Package:         packageName,
+		CollectionTypes: collectionTypes,
+	}
 }
 
 func getTypeSpecsFromAST(tree *ast.File) []*ast.TypeSpec {
@@ -161,8 +168,9 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix("joiner: ")
 
-	collectionTypes := parseFile("test1.go")
-	for _, collectionType := range collectionTypes {
+	parsedFile := parseFile("test1.go")
+	log.Println(parsedFile.Package)
+	for _, collectionType := range parsedFile.CollectionTypes {
 		log.Printf("%#v\n", collectionType)
 	}
 }
