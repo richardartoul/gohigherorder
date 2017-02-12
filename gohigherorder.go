@@ -180,9 +180,6 @@ func identifyPackage(f *ast.File) string {
 }
 
 func main() {
-	log.SetFlags(0)
-	log.SetPrefix("gohigherorder: ")
-
 	args := os.Args[1:]
 	if len(args) != 1 {
 		log.Fatal("Ex: gohigherorder <PATH_TO_FILE>")
