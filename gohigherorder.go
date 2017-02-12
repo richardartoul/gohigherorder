@@ -189,12 +189,7 @@ func main() {
 	}
 	parsedFile := parseFile(args[0])
 
-	f, err := os.Create("./out.go")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	w := bufio.NewWriter(f)
+	w := bufio.NewWriter(os.Stdout)
 	generatedTemplate.Execute(w, parsedFile)
 	w.Flush()
 }
