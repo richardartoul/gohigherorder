@@ -1,5 +1,10 @@
 # gohigherorder
 
+## Inspiration
+I mainly built this tool as a simple exercise in learning code generation.
+
+Inspiration from this blog post: http://www.onebigfluke.com/2014/12/generic-programming-go-generate.html
+
 ## Installation
 `go get https://github.com/richardartoul/gohigherorder`
 
@@ -48,6 +53,9 @@ func (items UserSlice) Filter(f func(User) bool) UserSlice {
 }
 ```
 
-I mainly built this tool as a simple exercise in learning code generation.
+## Development / Testing
 
-Inspiration from this blog post: http://www.onebigfluke.com/2014/12/generic-programming-go-generate.html
+1) Clone the repo
+2) Run `go build gohigherorder`
+3) Run `./gohigherorder gohigherorder_test.go`
+4) Run `go test gohigherorder`
